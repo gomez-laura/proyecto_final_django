@@ -1,9 +1,9 @@
 from django.db import models
 
+
 # Create your models here.
 
 class Profesor(models.Model):
-
     dni = models.CharField(max_length=9, unique=True)
     nombre = models.CharField(max_length=100)
     apellidos = models.CharField(max_length=150)

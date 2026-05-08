@@ -4,8 +4,8 @@ from django.db import models
 from alumno.models import Alumno
 from evaluacion.models import Evaluacion
 
-class Calificacion(models.Model):
 
+class Calificacion(models.Model):
     codigo = models.CharField(max_length=20, unique=True)
 
     alumno = models.ForeignKey(
@@ -34,7 +34,6 @@ class Calificacion(models.Model):
         unique_together = ('alumno', 'evaluacion')
 
     def clean(self):
-
         if self.nota < 0 or self.nota > 10:
             raise ValidationError(
                 "La nota debe estar entre 0 y 10"

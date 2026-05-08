@@ -3,8 +3,8 @@ from django.db import models
 # Create your models here.
 from asignatura.models import Asignatura
 
-class Evaluacion(models.Model):
 
+class Evaluacion(models.Model):
     TIPOS = [
         ('EXAMEN', 'Examen'),
         ('PRACTICA', 'Práctica'),
