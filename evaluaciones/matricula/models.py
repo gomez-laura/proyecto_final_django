@@ -1,12 +1,11 @@
 from django.db import models
-from alumno.models import Alumno
-from asignatura.models import Asignatura
 
+from alumnos.models import Alumno
 
-# Create your models here.
-
+from asignaturas.models import Asignatura
 
 class Matricula(models.Model):
+
     alumno = models.ForeignKey(
         Alumno,
         on_delete=models.CASCADE
@@ -21,13 +20,8 @@ class Matricula(models.Model):
 
     fecha_matricula = models.DateField(auto_now_add=True)
 
-    estado = models.CharField(
-        max_length=20,
-        default='ACTIVA'
-    )
-
-    class Meta:
-        unique_together = ('alumno', 'asignatura')
+    estado = models.CharField(max_length=20)
 
     def __str__(self):
-        return f"{self.alumno} -> {self.asignatura}"
+
+        return f"{self.alumno} - {self.asignatura}"

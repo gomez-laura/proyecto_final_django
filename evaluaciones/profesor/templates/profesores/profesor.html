@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Profesores</title>
+
+</head>
+
+<body>
+
+<h1>Listado de Profesores</h1>
+
+<p>
+    <a href="{% url 'profesores:crear' %}">
+        Crear profesor
+    </a>
+</p>
+
+<table border="1">
+
+    <tr>
+
+        <th>DNI</th>
+
+        <th>Nombre</th>
+
+        <th>Email</th>
+
+        <th>Departamento</th>
+
+    </tr>
+
+    {% for profesor in profesor %}
+
+    <tr>
+
+        <td>{{ profesor.dni }}</td>
+
+        <td>{{ profesor.nombre }}</td>
+
+        <td>{{ profesor.email }}</td>
+
+        <td>{{ profesor.departamento }}</td>
+
+        <td>
+
+            <a href="{% url 'profesores:detalle' profesor.pk %}">
+                Ver
+            </a>
+
+            <a href="{% url 'profesores:editar' profesor.pk %}">
+                Editar
+            </a>
+
+            <a href="{% url 'profesores:borrar' profesor.pk %}">
+                Borrar
+            </a>
+
+        </td>
+
+    </tr>
+
+    {% empty %}
+
+    <tr>
+
+        <td colspan="4">
+            No hay profesores
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+</body>
+
+</html>

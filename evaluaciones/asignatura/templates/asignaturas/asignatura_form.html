@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>
+
+        {% if modo == "editar" %}
+        Editar
+        {% else %}
+        Crear
+        {% endif %}
+
+        asignatura
+
+    </title>
+
+</head>
+
+<body>
+
+<h1>
+
+    {% if modo == "editar" %}
+    Editar
+    {% else %}
+    Crear
+    {% endif %}
+
+    asignatura
+
+</h1>
+
+<form method="post">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">
+        Guardar
+    </button>
+
+    <a href="{% url 'asignaturas:lista' %}">
+        Cancelar
+    </a>
+
+</form>
+
+</body>
+
+</html>

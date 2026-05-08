@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Evaluaciones</title>
+
+</head>
+
+<body>
+
+<h1>Listado de Evaluaciones</h1>
+
+<p>
+    <a href="{% url 'evaluaciones:crear' %}">
+        Crear evaluacion
+    </a>
+</p>
+
+<table border="1">
+
+    <tr>
+
+        <th>Tipo</th>
+
+        <th>Codigo</th>
+
+        <th>Titulo</th>
+
+        <th>Fecha</th>
+
+    </tr>
+
+    {% for evaluacion in evaluacion %}
+
+    <tr>
+
+        <td>{{ evaluacion.tipo }}</td>
+
+        <td>{{ evaluacion.codigo }}</td>
+
+        <td>{{ evaluacion.titulo }}</td>
+
+        <td>{{ evaluacion.fecha }}</td>
+
+        <td>
+
+            <a href="{% url 'evaluaciones:detalle' evaluacion.pk %}">
+                Ver
+            </a>
+
+            <a href="{% url 'evaluaciones:editar' evaluacion.pk %}">
+                Editar
+            </a>
+
+            <a href="{% url 'evaluaciones:borrar' evaluacion.pk %}">
+                Borrar
+            </a>
+
+        </td>
+
+    </tr>
+
+    {% empty %}
+
+    <tr>
+
+        <td colspan="4">
+            No hay evaluaciones
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+</body>
+
+</html>

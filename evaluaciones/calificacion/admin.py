@@ -1,22 +1,5 @@
 from django.contrib import admin
-from .models import alumno
 
+from .models import Calificacion
 
-@admin.register(calificacion)
-# Register your models here.
-class CalificacionAdmin(admin.ModelAdmin):
-    list_display = (
-        'codigo',
-        'alumno',
-        'evaluacion',
-        'nota'
-    )
-
-    search_fields = (
-        'codigo',
-        'alumno__nombre'
-    )
-
-    list_filter = (
-        'evaluacion',
-    )
+admin.site.register(Calificacion)

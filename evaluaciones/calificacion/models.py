@@ -1,23 +1,21 @@
 from django.db import models
 
-# Create your models here.
-from alumno.models import Alumno
-from evaluacion.models import Evaluacion
+from alumnos.models import Alumno
 
+from evaluaciones_app.models import Evaluacion
 
 class Calificacion(models.Model):
-    codigo = models.CharField(max_length=20, unique=True)
+
+    codigo = models.CharField(max_length=20)
 
     alumno = models.ForeignKey(
         Alumno,
-        on_delete=models.CASCADE,
-        related_name='calificaciones'
+        on_delete=models.CASCADE
     )
 
     evaluacion = models.ForeignKey(
         Evaluacion,
-        on_delete=models.CASCADE,
-        related_name='calificaciones'
+        on_delete=models.CASCADE
     )
 
     nota = models.DecimalField(
@@ -25,19 +23,8 @@ class Calificacion(models.Model):
         decimal_places=2
     )
 
-    observaciones = models.TextField(
-        blank=True,
-        null=True
-    )
-
-    class Meta:
-        unique_together = ('alumno', 'evaluacion')
-
-    def clean(self):
-        if self.nota < 0 or self.nota > 10:
-            raise ValidationError(
-                "La nota debe estar entre 0 y 10"
-            )
+    observaciones = models.TextField()
 
     def __str__(self):
+
         return f"{self.alumno} - {self.nota}"

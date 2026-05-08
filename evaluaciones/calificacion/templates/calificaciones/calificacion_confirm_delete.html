@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Borrar Calificacion</title>
+
+</head>
+
+<body>
+
+<h1>Borrar Calificacion</h1>
+
+<p>
+
+    Vas a borrar:
+    <strong>{{ calificacion.alumno }}</strong>
+
+</p>
+
+<form method="post">
+
+    {% csrf_token %}
+
+    <button type="submit">
+        Sí, borrar
+    </button>
+
+    <a href="{% url 'calificaciones:detalle' calificacion.pk %}">
+        Cancelar
+    </a>
+
+</form>
+
+</body>
+
+</html>

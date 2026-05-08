@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Alumnos</title>
+
+</head>
+
+<body>
+
+<h1>Listado de alumnos</h1>
+
+<p>
+    <a href="{% url 'alumnos:crear' %}">
+        Crear alumno
+    </a>
+</p>
+
+<table border="1">
+
+    <tr>
+
+        <th>DNI</th>
+
+        <th>Nombre</th>
+
+        <th>Curso</th>
+
+        <th>Acciones</th>
+
+    </tr>
+
+    {% for alumno in alumnos %}
+
+    <tr>
+
+        <td>{{ alumno.dni }}</td>
+
+        <td>{{ alumno.nombre }}</td>
+
+        <td>{{ alumno.curso }}</td>
+
+        <td>
+
+            <a href="{% url 'alumnos:detalle' alumno.pk %}">
+                Ver
+            </a>
+
+            <a href="{% url 'alumnos:editar' alumno.pk %}">
+                Editar
+            </a>
+
+            <a href="{% url 'alumnos:borrar' alumno.pk %}">
+                Borrar
+            </a>
+
+        </td>
+
+    </tr>
+
+    {% empty %}
+
+    <tr>
+
+        <td colspan="4">
+            No hay alumnos
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+</body>
+
+</html>

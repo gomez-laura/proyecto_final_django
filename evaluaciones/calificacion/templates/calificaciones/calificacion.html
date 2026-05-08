@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Calificaciones</title>
+
+</head>
+
+<body>
+
+<h1>Listado de Calificaciones</h1>
+
+<p>
+    <a href="{% url 'calificaciones:crear' %}">
+        Crear calificacion
+    </a>
+</p>
+
+<table border="1">
+
+    <tr>
+
+        <th>Codigo</th>
+
+        <th>Alumno</th>
+
+        <th>Evaluacion</th>
+
+        <th>Nota</th>
+
+        <th>Observaciones</th>
+
+    </tr>
+
+    {% for calificacion in calificacion %}
+
+    <tr>
+
+        <td>{{ calificacion.codigo }}</td>
+
+        <td>{{ calificacion.alumno}}</td>
+
+        <td>{{ calificacion.evaluacion }}</td>
+
+        <td>{{ calificacion.nota}}</td>
+
+        <td>{{ calificacion.observacion }}</td>
+
+        <td>
+
+            <a href="{% url 'calificaciones:detalle' calificacion.pk %}">
+                Ver
+            </a>
+
+            <a href="{% url 'calificaciones:editar' calificacion.pk %}">
+                Editar
+            </a>
+
+            <a href="{% url 'calificaciones:borrar' calificacion.pk %}">
+                Borrar
+            </a>
+
+        </td>
+
+    </tr>
+
+    {% empty %}
+
+    <tr>
+
+        <td colspan="4">
+            No hay calificaciones
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>{{ alumno.nombre }}</title>
+
+</head>
+
+<body>
+
+<h1>{{ alumno.nombre }}</h1>
+
+<p>
+    <strong>DNI:</strong>
+    {{ alumno.dni }}
+</p>
+
+<p>
+    <strong>Curso:</strong>
+    {{ alumno.curso }}
+</p>
+
+<p>
+
+    <a href="{% url 'alumnos:editar' alumno.pk %}">
+        Editar
+    </a>
+
+    <a href="{% url 'alumnos:borrar' alumno.pk %}">
+        Borrar
+    </a>
+
+    <a href="{% url 'alumnos:lista' %}">
+        Volver
+    </a>
+
+</p>
+
+</body>
+
+</html>

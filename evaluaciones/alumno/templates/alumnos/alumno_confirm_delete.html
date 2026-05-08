@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Borrar alumno</title>
+
+</head>
+
+<body>
+
+<h1>Borrar alumno</h1>
+
+<p>
+
+    Vas a borrar:
+    <strong>{{ alumno.nombre }}</strong>
+
+</p>
+
+<form method="post">
+
+    {% csrf_token %}
+
+    <button type="submit">
+        Sí, borrar
+    </button>
+
+    <a href="{% url 'alumnos:detalle' alumno.pk %}">
+        Cancelar
+    </a>
+
+</form>
+
+</body>
+
+</html>

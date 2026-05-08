@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Matriculas</title>
+
+</head>
+
+<body>
+
+<h1>Listado de Matriculas</h1>
+
+<p>
+    <a href="{% url 'matriculas:crear' %}">
+        Crear matricula
+    </a>
+</p>
+
+<table border="1">
+
+    <tr>
+
+        <th>Alumno</th>
+
+        <th>Asignatura</th>
+
+        <th>Curso_academico</th>
+
+        <th>Fecha_matricula</th>
+
+        <th>Estado</th>
+
+    </tr>
+
+    {% for matricula in matricula %}
+
+    <tr>
+
+        <td>{{ matricula.alumno }}</td>
+
+        <td>{{ matricula.asignatura }}</td>
+
+        <td>{{ matricula.curso_academico }}</td>
+
+        <td>{{ matricula.fecha_matricula}}</td>
+
+        <td>{{ matricula.estado}}</td>
+
+        <td>
+
+            <a href="{% url 'matriculas:detalle' matricula.pk %}">
+                Ver
+            </a>
+
+            <a href="{% url 'matriculas:editar' matricula.pk %}">
+                Editar
+            </a>
+
+            <a href="{% url 'matriculas:borrar' matricula.pk %}">
+                Borrar
+            </a>
+
+        </td>
+
+    </tr>
+
+    {% empty %}
+
+    <tr>
+
+        <td colspan="4">
+            No hay matriculas
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+</body>
+
+</html>

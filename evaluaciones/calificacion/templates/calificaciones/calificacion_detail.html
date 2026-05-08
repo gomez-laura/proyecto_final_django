@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>{{ calificacion.alumno }}</title>
+
+</head>
+
+<body>
+
+<h1>{{ calificacion.alumno }}</h1>
+
+<p>
+    <strong>Codigo:</strong>
+    {{ calificacion.codigo }}
+</p>
+
+<p>
+    <strong>Evaluacion:</strong>
+    {{ calificacion.evaluacion }}
+</p>
+
+<p>
+
+    <a href="{% url 'evaluaciones:editar' evaluacion.pk %}">
+        Editar
+    </a>
+
+    <a href="{% url 'evaluaciones:borrar' evalaucion.pk %}">
+        Borrar
+    </a>
+
+    <a href="{% url 'evaluaciones:lista' %}">
+        Volver
+    </a>
+
+</p>
+
+</body>
+
+</html>

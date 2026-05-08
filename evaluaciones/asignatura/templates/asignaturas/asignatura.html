@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Asignaturas</title>
+
+</head>
+
+<body>
+
+<h1>Listado de Asignaturas</h1>
+
+<p>
+    <a href="{% url 'asignaturas:crear' %}">
+        Crear asignatura
+    </a>
+</p>
+
+<table border="1">
+
+    <tr>
+
+        <th>Codigo</th>
+
+        <th>Nombre</th>
+
+        <th>Descripcion</th>
+
+        <th>Profesor</th>
+
+    </tr>
+
+    {% for asignatura in asignatura %}
+
+    <tr>
+
+        <td>{{ asignatura.codigo }}</td>
+
+        <td>{{ asignatura.nombre }}</td>
+
+        <td>{{ asignatura.descripcion }}</td>
+
+        <td>{{ asignatura.profesor }}</td>
+
+        <td>
+
+            <a href="{% url 'asignaturas:detalle' asignatura.pk %}">
+                Ver
+            </a>
+
+            <a href="{% url 'asignaturas:editar' asignatura.pk %}">
+                Editar
+            </a>
+
+            <a href="{% url 'asignaturas:borrar' asignatura.pk %}">
+                Borrar
+            </a>
+
+        </td>
+
+    </tr>
+
+    {% empty %}
+
+    <tr>
+
+        <td colspan="4">
+            No hay asignaturas
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+</body>
+
+</html>

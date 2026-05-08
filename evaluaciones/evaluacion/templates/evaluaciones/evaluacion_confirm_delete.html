@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Borrar Evaluacion</title>
+
+</head>
+
+<body>
+
+<h1>Borrar Evaluacion</h1>
+
+<p>
+
+    Vas a borrar:
+    <strong>{{ evaluacion.codigo }}</strong>
+
+</p>
+
+<form method="post">
+
+    {% csrf_token %}
+
+    <button type="submit">
+        Sí, borrar
+    </button>
+
+    <a href="{% url 'evaluaciones:detalle' evalaucion.pk %}">
+        Cancelar
+    </a>
+
+</form>
+
+</body>
+
+</html>

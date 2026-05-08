@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>{{ profesor.nombre }}</title>
+
+</head>
+
+<body>
+
+<h1>{{ profesor.nombre }}</h1>
+
+<p>
+    <strong>DNI:</strong>
+    {{ profesor.dni }}
+</p>
+
+<p>
+    <strong>Email:</strong>
+    {{ profesor.email }}
+</p>
+
+<p>
+
+    <a href="{% url 'profesores:editar' profesor.pk %}">
+        Editar
+    </a>
+
+    <a href="{% url 'profesores:borrar' profesor.pk %}">
+        Borrar
+    </a>
+
+    <a href="{% url 'profesores:lista' %}">
+        Volver
+    </a>
+
+</p>
+
+</body>
+
+</html>

@@ -1,46 +1,118 @@
-from django.shortcuts import render
-from django.urls import reverse_lazy
-
-from django.views.generic import (
-    ListView,
-    DetailView,
-    CreateView,
-    UpdateView,
-    DeleteView
+from django.shortcuts import (
+    render,
+    redirect,
+    get_object_or_404
 )
 
 from .models import Alumno
 
-
-class AlumnoListView(ListView):
-    model = Alumno
-    template_name = 'alumnos/lista.html'
-    context_object_name = 'alumnos'
+from .forms import AlumnoForm
 
 
-class AlumnoDetailView(DetailView):
-    model = Alumno
-    template_name = 'alumnos/detalle.html'
+def listarAlumnos(request):
+
+    alumnos = Alumno.objects.all()
+
+    return render(
+        request,
+        'alumnos/alumno.html',
+        {'alumnos': alumnos}
+    )
 
 
-class AlumnoCreateView(CreateView):
-    model = Alumno
-    fields = '__all__'
-    template_name = 'alumnos/formulario.html'
+def detalleAlumno(request, pk):
 
-    success_url = reverse_lazy('lista_alumnos')
+    alumno = get_object_or_404(
+        Alumno,
+        pk=pk
+    )
 
-
-class AlumnoUpdateView(UpdateView):
-    model = Alumno
-    fields = '__all__'
-    template_name = 'alumnos/formulario.html'
-
-    success_url = reverse_lazy('lista_alumnos')
+    return render(
+        request,
+        'alumnos/alumno_detail.html',
+        {'alumno': alumno}
+    )
 
 
-class AlumnoDeleteView(DeleteView):
-    model = Alumno
-    template_name = 'alumnos/eliminar.html'
+def crearAlumno(request):
 
-    success_url = reverse_lazy('lista_alumnos')
+    if request.method == "POST":
+
+        form = AlumnoForm(request.POST)
+
+        if form.is_valid():
+
+            form.save()
+
+            return redirect("alumnos:lista")
+
+    else:
+
+        form = AlumnoForm()
+
+    return render(
+        request,
+        'alumnos/alumno_form.html',
+        {
+            'form': form,
+            'modo': 'crear'
+        }
+    )
+
+
+def editarAlumno(request, pk):
+
+    alumno = get_object_or_404(
+        Alumno,
+        pk=pk
+    )
+
+    if request.method == "POST":
+
+        form = AlumnoForm(
+            request.POST,
+            instance=alumno
+        )
+
+        if form.is_valid():
+
+            form.save()
+
+            return redirect(
+                "alumnos:detalle",
+                pk=alumno.pk
+            )
+
+    else:
+
+        form = AlumnoForm(instance=alumno)
+
+    return render(
+        request,
+        'alumnos/alumno_form.html',
+        {
+            'form': form,
+            'modo': 'editar',
+            'alumno': alumno
+        }
+    )
+
+
+def borrarAlumno(request, pk):
+
+    alumno = get_object_or_404(
+        Alumno,
+        pk=pk
+    )
+
+    if request.method == "POST":
+
+        alumno.delete()
+
+        return redirect("alumnos:lista")
+
+    return render(
+        request,
+        'alumnos/alumno_confirm_delete.html',
+        {'alumno': alumno}
+    )
