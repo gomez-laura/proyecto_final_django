@@ -1,6 +1,7 @@
 from django.db import models
 
-from profesores.models import Profesor
+from profesor.models import Profesor
+
 
 class Asignatura(models.Model):
 

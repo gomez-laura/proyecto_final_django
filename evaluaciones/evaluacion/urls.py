@@ -1,25 +1,37 @@
 from django.urls import path
+from . import views
 
-from .views import *
+app_name = "evaluacion"
 
 urlpatterns = [
 
-    path('', EvaluacionListView.as_view(),
-         name='lista_evaluaciones'),
+    path(
+        "",
+        views.listarEvaluaciones,
+        name="lista"
+    ),
 
-    path('<int:pk>/',
-         EvaluacionDetailView.as_view(),
-         name='detalle_evaluacion'),
+    path(
+        "nuevo/",
+        views.crearEvaluacion,
+        name="crear"
+    ),
 
-    path('nuevo/',
-         EvaluacionCreateView.as_view(),
-         name='crear_evaluacion'),
+    path(
+        "<int:pk>/",
+        views.detalleEvaluacion,
+        name="detalle"
+    ),
 
-    path('editar/<int:pk>/',
-         EvaluacionUpdateView.as_view(),
-         name='editar_evaluacion'),
+    path(
+        "<int:pk>/editar/",
+        views.editarEvaluacion,
+        name="editar"
+    ),
 
-    path('eliminar/<int:pk>/',
-         EvaluacionDeleteView.as_view(),
-         name='eliminar_evaluacion'),
+    path(
+        "<int:pk>/borrar/",
+        views.borrarEvaluacion,
+        name="borrar"
+    ),
 ]

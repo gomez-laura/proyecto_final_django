@@ -1,6 +1,7 @@
 from django.db import models
 
-from asignaturas.models import Asignatura
+from asignatura.models import Asignatura
+
 
 class Evaluacion(models.Model):
 

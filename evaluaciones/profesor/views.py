@@ -1,42 +1,86 @@
-from django.shortcuts import render
-from django.urls import reverse_lazy
-
-from django.views.generic import *
-
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Profesor
+from .forms import ProfesorForm
 
 
-class ProfesorListView(ListView):
-    model = Profesor
-    template_name = 'profesores/lista.html'
+def listarProfesores(request):
+    profesores = Profesor.objects.all()
+    return render(
+        request,
+        'profesor/profesores_lista.html',
+        {'profesores': profesores}
+    )
 
 
-class ProfesorDetailView(DetailView):
-    model = Profesor
-    template_name = 'profesores/detalle.html'
+def detalleProfesor(request, pk):
+    profesor = get_object_or_404(
+        Profesor,
+        pk=pk
+    )
+    return render(
+        request,
+        'profesor/profesor_detail.html',
+        {'profesor': profesor}
+    )
 
 
-class ProfesorCreateView(CreateView):
-    model = Profesor
-    fields = '__all__'
+def crearProfesor(request):
+    if request.method == "POST":
+        form = ProfesorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("profesores:lista")
+    else:
+        form = ProfesorForm()
+    return render(
+        request,
+        'profesor/profesor_form.html',
+        {
+            'form': form,
+            'modo': 'crear'
+        }
+    )
 
-    template_name = 'profesores/formulario.html'
 
-    success_url = reverse_lazy('lista_profesores')
+def editarProfesor(request, pk):
+    profesor = get_object_or_404(
+        Profesor,
+        pk=pk
+    )
+    if request.method == "POST":
+        form = ProfesorForm(
+            request.POST,
+            instance=profesor
+        )
+        if form.is_valid():
+            form.save()
+            return redirect(
+                "profesor:detalle",
+                pk=profesor.pk
+            )
+    else:
+        form = ProfesorForm(instance=profesor)
+    return render(
+        request,
+        'profesor/profesor_form.html',
+        {
+            'form': form,
+            'modo': 'editar',
+            'profesor': profesor
+        }
+    )
 
 
-class ProfesorUpdateView(UpdateView):
-    model = Profesor
-    fields = '__all__'
-
-    template_name = 'profesores/formulario.html'
-
-    success_url = reverse_lazy('lista_profesores')
-
-
-class ProfesorDeleteView(DeleteView):
-    model = Profesor
-
-    template_name = 'profesores/eliminar.html'
-
-    success_url = reverse_lazy('lista_profesores')
+def borrarProfesor(request, pk):
+    profesor = get_object_or_404(
+        Profesor,
+        pk=pk
+    )
+    if request.method == "POST":
+        profesor.delete()
+        return redirect("profesores:lista")
+    return render(
+        request,
+        'profesor/profesor_confirm_delete.html',
+        {'profesor': profesor}
+    )

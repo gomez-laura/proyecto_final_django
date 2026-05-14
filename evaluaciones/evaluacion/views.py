@@ -1,42 +1,86 @@
-from django.shortcuts import render
-from django.urls import reverse_lazy
-
-from django.views.generic import *
-
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Evaluacion
+from .forms import EvaluacionForm
 
 
-class EvaluacionListView(ListView):
-    model = Evaluacion
-    template_name = 'evaluaciones/lista.html'
+def listarEvaluaciones(request):
+    evaluaciones = Evaluacion.objects.all()
+    return render(
+        request,
+        'evaluacion/evaluaciones_lista.html',
+        {'evaluaciones': evaluaciones}
+    )
 
 
-class EvaluacionDetailView(DetailView):
-    model = Evaluacion
-    template_name = 'evaluaciones/detalle.html'
+def detalleEvaluacion(request, pk):
+    evaluacion = get_object_or_404(
+        Evaluacion,
+        pk=pk
+    )
+    return render(
+        request,
+        'evaluacion/evaluacion_detail.html',
+        {'evaluacion': evaluacion}
+    )
 
 
-class EvaluacionCreateView(CreateView):
-    model = Evaluacion
-    fields = '__all__'
+def crearEvaluacion(request):
+    if request.method == "POST":
+        form = EvaluacionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("evaluaciones:lista")
+    else:
+        form = EvaluacionForm()
+    return render(
+        request,
+        'evaluacion/evaluacion_form.html',
+        {
+            'form': form,
+            'modo': 'crear'
+        }
+    )
 
-    template_name = 'evaluaciones/formulario.html'
 
-    success_url = reverse_lazy('lista_evaluaciones')
+def editarEvaluacion(request, pk):
+    evaluacion = get_object_or_404(
+        Evaluacion,
+        pk=pk
+    )
+    if request.method == "POST":
+        form = EvaluacionForm(
+            request.POST,
+            instance=evaluacion
+        )
+        if form.is_valid():
+            form.save()
+            return redirect(
+                "evaluacion:detalle",
+                pk=evaluacion.pk
+            )
+    else:
+        form = EvaluacionForm(instance=evaluacion)
+    return render(
+        request,
+        'evaluacion/evaluacion_form.html',
+        {
+            'form': form,
+            'modo': 'editar',
+            'evaluacion': evaluacion
+        }
+    )
 
 
-class EvaluacionUpdateView(UpdateView):
-    model = Evaluacion
-    fields = '__all__'
-
-    template_name = 'evaluaciones/formulario.html'
-
-    success_url = reverse_lazy('lista_evaluaciones')
-
-
-class EvaluacionDeleteView(DeleteView):
-    model = Evaluacion
-
-    template_name = 'evaluaciones/eliminar.html'
-
-    success_url = reverse_lazy('lista_evaluaciones')
+def borrarEvaluacion(request, pk):
+    evaluacion = get_object_or_404(
+        Evaluacion,
+        pk=pk
+    )
+    if request.method == "POST":
+        evaluacion.delete()
+        return redirect("evaluaciones:lista")
+    return render(
+        request,
+        'evaluacion/evaluacion_confirm_delete.html',
+        {'evaluacion': evaluacion}
+    )

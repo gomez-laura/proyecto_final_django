@@ -1,25 +1,37 @@
 from django.urls import path
+from . import views
 
-from .views import *
+app_name = "asignatura"
 
 urlpatterns = [
 
-    path('', AsignaturaListView.as_view(),
-         name='lista_asignaturas'),
+    path(
+        "",
+        views.listarAsignaturas,
+        name="lista"
+    ),
 
-    path('<int:pk>/',
-         AsignaturaDetailView.as_view(),
-         name='detalle_asignatura'),
+    path(
+        "nuevo/",
+        views.crearAsignatura,
+        name="crear"
+    ),
 
-    path('nuevo/',
-         AsignaturaCreateView.as_view(),
-         name='crear_asignatura'),
+    path(
+        "<int:pk>/",
+        views.detalleAsignatura,
+        name="detalle"
+    ),
 
-    path('editar/<int:pk>/',
-         AsignaturaUpdateView.as_view(),
-         name='editar_asignatura'),
+    path(
+        "<int:pk>/editar/",
+        views.editarAsignatura,
+        name="editar"
+    ),
 
-    path('eliminar/<int:pk>/',
-         AsignaturaDeleteView.as_view(),
-         name='eliminar_asignatura'),
+    path(
+        "<int:pk>/borrar/",
+        views.borrarAsignatura,
+        name="borrar"
+    ),
 ]

@@ -1,42 +1,86 @@
-from django.shortcuts import render
-from django.urls import reverse_lazy
-
-from django.views.generic import *
-
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Asignatura
+from .forms import AsignaturaForm
 
 
-class AsignaturaListView(ListView):
-    model = Asignatura
-    template_name = 'asignaturas/lista.html'
+def listarAsignaturas(request):
+    asignaturas = Asignatura.objects.all()
+    return render(
+        request,
+        'asignatura/asignaturas_lista.html',
+        {'asignaturas': asignaturas}
+    )
 
 
-class AsignaturaDetailView(DetailView):
-    model = Asignatura
-    template_name = 'asignaturas/detalle.html'
+def detalleAsignatura(request, pk):
+    asignatura = get_object_or_404(
+        Asignatura,
+        pk=pk
+    )
+    return render(
+        request,
+        'asignatura/asignatura_detail.html',
+        {'asignatura': asignatura}
+    )
 
 
-class AsignaturaCreateView(CreateView):
-    model = Asignatura
-    fields = '__all__'
+def crearAsignatura(request):
+    if request.method == "POST":
+        form = AsignaturaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("asignaturas:lista")
+    else:
+        form = AsignaturaForm()
+    return render(
+        request,
+        'asignatura/asignatura_form.html',
+        {
+            'form': form,
+            'modo': 'crear'
+        }
+    )
 
-    template_name = 'asignaturas/formulario.html'
 
-    success_url = reverse_lazy('lista_asignaturas')
+def editarAsignatura(request, pk):
+    asignatura = get_object_or_404(
+        Asignatura,
+        pk=pk
+    )
+    if request.method == "POST":
+        form = AsignaturaForm(
+            request.POST,
+            instance=asignatura
+        )
+        if form.is_valid():
+            form.save()
+            return redirect(
+                "asignatura:detalle",
+                pk=asignatura.pk
+            )
+    else:
+        form = AsignaturaForm(instance=asignatura)
+    return render(
+        request,
+        'asignatura/asignatura_form.html',
+        {
+            'form': form,
+            'modo': 'editar',
+            'asignatura': asignatura
+        }
+    )
 
 
-class AsignaturaUpdateView(UpdateView):
-    model = Asignatura
-    fields = '__all__'
-
-    template_name = 'asignaturas/formulario.html'
-
-    success_url = reverse_lazy('lista_asignaturas')
-
-
-class AsignaturaDeleteView(DeleteView):
-    model = Asignatura
-
-    template_name = 'asignaturas/eliminar.html'
-
-    success_url = reverse_lazy('lista_asignaturas')
+def borrarAsignatura(request, pk):
+    asignatura = get_object_or_404(
+        Asignatura,
+        pk=pk
+    )
+    if request.method == "POST":
+        asignatura.delete()
+        return redirect("asignatura:lista")
+    return render(
+        request,
+        'asignatura/asignatura_confirm_delete.html',
+        {'asignatura': asignatura}
+    )

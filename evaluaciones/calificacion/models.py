@@ -1,8 +1,8 @@
 from django.db import models
 
-from alumnos.models import Alumno
+from alumno.models import Alumno
+from evaluacion.models import Evaluacion
 
-from evaluaciones_app.models import Evaluacion
 
 class Calificacion(models.Model):
 
