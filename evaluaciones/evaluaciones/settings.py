@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 CORS_ALLOW_ALL_ORIGINS = True
 CSRF_TRUSTED_ORIGINS = ['https://drew-maternity-tractor.ngrok-free.dev']
 
-SECRET_KEY = config('SECRET_KEY')
+#SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=True, cast=bool)
 ALLOWED_HOSTS = ['*']
 
@@ -33,22 +33,11 @@ ALLOWED_HOSTS = ['*']
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'django-insecure-6vzdqksqc%5ytm1=a)$9c37u4d3s$91j^jzqs@&(dv!t3r*f6g'
+SECRET_KEY = 'django-insecure-6vzdqksqc%5ytm1=a)$9c37u4d3s$91j^jzqs@&(dv!t3r*f6g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = True
 
-
-#SECRET_KEY = 'django-insecure-=&^=rt!5akush8e3au1z&-_+j^%dueviqpmymr_ci+q(*j)+@m'
-SECRET_KEY = config('SECRET_KEY')
-DEBUG = config('DEBUG', default=True, cast=bool)
-ALLOWED_HOSTS = ['*']
-# Database
-DATABASES = {
- 'default': dj_database_url.config(
- default=config('DATABASE_URL')
- )
-}
 #ALLOWED_HOSTS = []
 
 
@@ -66,8 +55,8 @@ INSTALLED_APPS = [
     'asignatura',
     'evaluacion',
     'calificacion',
-    'corsheaders',
     'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -104,18 +93,18 @@ WSGI_APPLICATION = 'evaluaciones.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-#DATABASES = {
-  #  'default': {
- #       'ENGINE': 'django.db.backends.sqlite3',
-   #     'NAME': BASE_DIR / 'db.sqlite3',
-  #  }
-#}
-
 DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL')
-    )
+   'default': {
+       'ENGINE': 'django.db.backends.sqlite3',
+       'NAME': BASE_DIR / 'db.sqlite3',
+   }
 }
+
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=config('DATABASE_URL')
+#     )
+# }
 
 
 # Password validation
