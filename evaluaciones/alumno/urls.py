@@ -34,4 +34,8 @@ urlpatterns = [
         views.borrarAlumno,
         name="borrar"
     ),
+
+    path('api/alumnos/',
+         views.api_lista_alumnos,
+         name='api_lista_alumnos')
 ]
