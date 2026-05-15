@@ -10,7 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
-from pathlib import Path
+from pathlib import Path, PosixPath
+import os
 from datetime import timedelta
 from decouple import config
 import dj_database_url
@@ -37,6 +38,17 @@ ALLOWED_HOSTS = ['*']
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = True
 
+
+#SECRET_KEY = 'django-insecure-=&^=rt!5akush8e3au1z&-_+j^%dueviqpmymr_ci+q(*j)+@m'
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=True, cast=bool)
+ALLOWED_HOSTS = ['*']
+# Database
+DATABASES = {
+ 'default': dj_database_url.config(
+ default=config('DATABASE_URL')
+ )
+}
 #ALLOWED_HOSTS = []
 
 
@@ -54,10 +66,8 @@ INSTALLED_APPS = [
     'asignatura',
     'evaluacion',
     'calificacion',
-    'corsdheaders',
-    'rest_framework',
-    'incidencias',
     'corsheaders',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
